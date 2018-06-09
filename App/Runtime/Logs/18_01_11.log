@@ -1,0 +1,8 @@
+[ 2018-01-11T22:16:13+08:00 ] 0.0.0.0 /ls/
+NOTIC: [2] preg_replace(): The /e modifier is no longer supported, use preg_replace_callback instead /Users/lmerengues/Sites/LS/ThinkPHP/Common/common.php 第 217 行.
+INFO: [ app_begin ] --START--
+INFO: ReadHtmlCache Behavior ::run [ RunTime:0.000801s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000865s ]
+NOTIC: [8] Undefined variable: group /Users/lmerengues/Sites/LS/ThinkPHP/Lib/Core/App.class.php 第 102 行.
+ERR: 无法加载模块:
+

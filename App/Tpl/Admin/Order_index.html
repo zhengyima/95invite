@@ -1,0 +1,476 @@
+
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+    	<meta charset="UTF-8" />
+		<title>首页</title>
+		<include file='App/Tpl/Common/csslist.html' />	
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <script src="__PUBLIC__/js/modernizr.js"></script>
+        <script src="__PUBLIC__/js/moment.min.js"></script>	
+        <link href="__PUBLIC__/vendor/jquery-datatables-bs3/css/datatables.css" rel="stylesheet"/>
+       
+        <style type="text/css"> 
+            .fc .fc-widget-header {
+            background: #2c4252;
+            border-color: #b5afaf;
+            color: white;
+            font-size: 13px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 10px 0;
+            text-transform: uppercase;
+            }
+			.fc-head-container a {
+                color: #ffffff;
+            }
+            a {              
+				color: #000000;
+            }
+            #mytable_paginate a{
+				color:#777
+			  }
+			  .paginate_button{
+				  margin-right:20px;
+			  }
+        </style>
+	</head>
+	<body>
+		<include file='App/Tpl/Common/header_admin.html'/>
+		<div class="container-fluid content">	
+			<div class="row">		
+				<include file='App/Tpl/Common/sidebar_admin.html'/>	
+			<div class="main ">
+					<!-- Page Header -->
+					<div class="page-header">
+						<div class="pull-left">
+							<ol class="breadcrumb visible-sm visible-md visible-lg">								
+								<li><a href="{:U('Admin/Order/index')}"><i class="icon fa fa-home"></i>主页</a></li>
+								<li class="active"><i class="fa fa-laptop"></i>主页</li>
+							</ol>						
+						</div>
+						<div class="pull-right">
+							<h2>首页</h2>
+						</div>					
+					</div>
+                    <div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h6><i class="fa fa-signal"></i>会议室预约日历</h6> 
+										<a class="mylink"><i class="fa fa-pencil"></i>	</a>								
+										<div class="panel-actions">
+											<a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+											<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
+										</div>
+										<p>选中您要预约的日期吧</p>
+									</div>
+									<div class="panel-body">
+										<form class="form-horizontal" role="form">
+											<div class="form-group">
+												<center>
+												<label style="font-size:30px;color:black">请选择会议室&nbsp</label>								
+													<select id="basic" onchange="change()" style="font-size:30px;color:black" >
+														<foreach name="allhouse" item="b">
+															<option  value="{$b['house_id']}">{$b['house_name']}</option>
+														</foreach>
+													</select>
+												 
+												</center>
+											</div>
+										</form>
+										<div id='calendar'></div>
+										<div class="row">
+											<div class="col-lg-8" style="padding-top:15px;"></div>
+											<div class="col-lg-2" style="padding-top:15px;">
+												<label>已选中<span id="hour_select">0</span>个小时</label>
+											</div>
+											<div class="col-lg-2">
+												<button type='submit' id='myorder' class='bk-margin-5 btn btn-danger' style='margin-left:45%'>提交</button>
+												<input type="hidden" name="Submit" id="houseid" value="{$houseid}">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div class="panel panel-default bk-bg-white">
+								<div class="panel-heading bk-bg-white">
+									<h6><i class="fa fa-table red"></i><span class="break"></span>会议室预约情况一览</h6>							
+									<div class="panel-actions">
+										<a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+										<a href="#" class="btn-close"><i class="fa fa-times"></i></a>
+									</div>
+								</div>
+								<div class="panel-body">
+                                    <form action="#" method="post" class="form-horizontal " id="find">
+									    <div class="form-group">
+										    <div class="col-sm-3">
+												<input type="text" id="input-small" name="find_text" class="form-control input-sm" placeholder="请先选择右边您要查找的内容再输入" />
+											</div>
+											<div class="col-md-9">		
+											<input type="submit" name="Submit" value="查找">
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio1" name="inline-radios" value="1"> 
+													<label for="inline-radio1"> 预约单号</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio2" name="inline-radios" value="2"> 
+													<label for="inline-radio2"> 会议室编号</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio3" name="inline-radios" value="3"> 
+													<label for="inline-radio3"> 会议室名称</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio4" name="inline-radios" value="4"> 
+													<label for="inline-radio4"> 预约人学工号</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio5" name="inline-radios" value="5"> 
+													<label for="inline-radio5"> 预约人姓名</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio6" name="inline-radios" value="6"> 
+													<label for="inline-radio6"> 预约日期</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio7" name="inline-radios" value="7"> 
+													<label for="inline-radio7">预约时间</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio8" name="inline-radios" value="8"> 
+													<label for="inline-radio8"> 预约目的</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio9" name="inline-radios" value="9"> 
+													<label for="inline-radio9">预约部门</label>
+												</div>
+												<div class="radio-custom radio-inline">
+													<input type="radio" id="inline-radio10" name="inline-radios" value="10"> 
+													<label for="inline-radio10">预约审批情况</label>
+												</div>
+											</div>
+										</div>
+									</form>
+									<table class="table table-bordered table-striped mb-none" id="mytable">
+                                        <thead>
+                                            <tr>
+                                                <th>预约单号</th>
+                                                <th>会议室编号</th>
+                    	                        <th>会议室名称</th>
+                                                <th>预约人学工号</th>
+                                                <th>预约人姓名</th>
+                                                <th>使用日期与时间</th>
+                                                <th>使用目的</th>
+                                                <th>预约部门</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <foreach name="ps" item="b">
+                                                <tr>
+                                                    <td>{$b['apply_id']}</td>
+													<td>{$b['house_id']}</td>
+				                                    <td>{$b['house_name']}</td>
+                                        	        <td>{$b['man_id']}</td>
+                                                    <td>{$b['m_name']}</td>
+                                                    <td>{$b['use_date']}  {$time_list[$b['use_time']-1]} - {$time_list[$b['use_time']]}</td>
+                                                    <td>{$b['use_goal']}</td>
+                                                    <td>{$b['apply_dep']}</td>
+                                                </tr>
+                                            </foreach>
+										</tbody>
+									</table>
+									<span class='help-block'>使用状态说明：0-空闲 1-使用中 2-已归还</span>
+									<span class='help-block'>上边两个输入框，上边的是按字段查找，下边的是全字段查找。</span>
+									<span class='help-block'>如果查找后您想要恢复全表格查看，再次点击查找按钮即可。</span>
+									<span class='help-block'>如果想查找日期的话请按格式使用全字段匹配</span>
+								</div>
+							</div>
+						</div>
+					</div>	
+                </div>
+		</div>
+        <div class="clearfix"></div>	
+		<include file='App/Tpl/Common/footer.html'/>
+		<include file='App/Tpl/Common/jslists.html'/>
+		<script src="__PUBLIC__/js/fullcalendar.min.js"></script>
+		<script src="__PUBLIC__/js/locale/fullcalendar-zh-cn.js"></script>
+        <link href='__PUBLIC__/css/fullcalendar.min.css' rel='stylesheet' />
+        <link href='__PUBLIC__/css/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+        <script src="__PUBLIC__/vendor/jquery-datatables-bs3/js/jquery.dataTables.min.js"></script>
+	<script>
+   //alert("a");
+		function formatDateTime(inputTime) {    
+			var date = new Date(inputTime);  
+			var y = date.getFullYear();    
+			var m = date.getMonth() + 1;    
+			m = m < 10 ? ('0' + m) : m;    
+			var d = date.getDate();    
+			d = d < 10 ? ('0' + d) : d;    
+			var h = date.getHours();  
+			h = h < 10 ? ('0' + h) : h;  
+			var minute = date.getMinutes();  
+			var second = date.getSeconds();  
+			minute = minute < 10 ? ('0' + minute) : minute;    
+			second = second < 10 ? ('0' + second) : second;   
+			return y + '-' + m + '-' + d;    
+		};  		
+		var start_time;
+		var end_time;
+		var pick_date;
+		var houseflag;
+		var fulldates=  [];
+		var flag=0;
+		if($("#houseid").val()){
+			$("#basic").val($("#houseid").val());
+			console.log('ok!!!!')
+		}
+		function change(){
+			flag=1;
+			fulldates = [];
+   			var houseid=$("#basic").val();
+			$.post("{:U('Index/Order/getBusyDay1')}",{"p_houseid":houseid},function(data){
+				console.log("in!");
+				console.log(data);
+				events = data[1];
+				data = data[0];
+				//fulldates = date;
+				for(var i=0;i<data.length;i++){
+					fulldates.push(	{
+						title: i.toString(),
+						start: data[i],
+						end: data[i],
+						rendering: 'background',
+						color: '#ff9f89'
+					});
+				}
+				today = new Date();
+                yesterday = new Date();
+                yesterday.setTime(today.getTime()-24*60*60*1000)
+                var timestamp = Date.parse(today); 
+                var yesterdaystamp = Date.parse(yesterday);
+				fulldates.push(	{
+						title: i.toString(),
+						start: '1900-01-01',
+						end: formatDateTime(timestamp),
+						rendering: 'background',
+						color: '#716f6f'
+				});
+				for(var i =0;i<events.length;i++){
+
+					var starttime = (events[i]['time'].split("-"))[0];
+					if(starttime[1]==":"){
+						starttime = "0"+starttime
+					}
+					var endtime = (events[i]['time'].split("-"))[1];
+					if(endtime[1]==":"){
+						endtime = "0"+endtime
+					}
+					var title = "预约人："+events[i]['mname']+"\n预约事由："+events[i]['goal']
+					fulldates.push(	{
+						id: i+100,
+						//title: events[i]['house_name'],
+						title:title,
+						start: events[i]['use_date']+'T'+starttime,
+						end:events[i]['use_date']+'T'+endtime,
+						color: "#df584c"
+					});
+				}
+				console.log(fulldates);
+				console.log("in2")
+				$('#calendar').fullCalendar('removeEvents');
+        		$('#calendar').fullCalendar( 'addEventSource', fulldates); 
+    			$('#calendar').fullCalendar('refetchEvents');
+			})
+		}
+
+		$("#myorder").click(function() {
+				var obj=document.getElementById("basic");
+				var index=obj.selectedIndex;
+				var house=obj.options[index].text;
+				var timearray="";
+				for(var i=start_time;i<end_time;){
+					var a=i%60;
+					if(a==0){
+						timearray+=(i/60).toString()+':00';
+						timearray+='-'+((i+30)/60-0.5).toString()+':30'+'_'
+					}
+					else{
+						timearray+=(i/60-0.5).toString()+':30';
+						timearray+='-'+((i+30)/60).toString()+':00'+'_'
+					}
+					i+=30;
+				}
+				console.log(house);
+				if($("#houseid").val()&&flag==0){
+            		var houseid=$("#houseid").val();
+            	}
+            	else{
+            		var houseid=$("#basic").val();
+            	}
+				tourl = "{:U('Admin/Order/form',array('date' => 'myurl1','housename'=>'myurl2','time'=>'myurl3','houseid' =>'myurl4'))}";
+					tourl=tourl.replace('myurl1',pick_date);
+					tourl=tourl.replace('myurl2',house);
+					tourl=tourl.replace('myurl3',timearray);
+					tourl=tourl.replace('myurl4',houseid);
+
+					console.log(tourl);
+					location.href = tourl;
+        });
+
+
+       	$(document).ready(function() {
+            $("#mytable").DataTable({
+				"paging": true,
+				"iDisplayLength": 10, //默认每页数量
+				"bPaginate": true, //翻页功能
+				"bLengthChange": false, //改变每页显示数据数量
+				"bFilter": false, //过滤功能
+				"bInfo": true, //页脚信息
+				"bAutoWidth": true, //自动宽度
+				"bRetrieve": true,
+				"processing": true,
+				//"ordering": false,
+				//"bSort": false, 
+				//"serverSide" : true,//服务器端进行分页处理的意思
+				//"bPaginate": true,
+				//"bProcessing": true
+				columns : [{data : "id"},{data:"value"},{data:"value2"},{data:"value3"},{data:"value4"},{data:"value5"},{data:"value6"},{data:"value7"}],
+			});
+			var mydate = new Date();
+            $(".mylink").click(function(){
+                console.log("sadasd");
+            })
+           	var houseid=$("#basic").val();
+			$.post("{:U('Index/Order/getBusyDay1')}",{"p_houseid":houseid},function(data){
+				events = data[1];
+				data = data[0];
+				today = new Date();
+                yesterday = new Date();
+                yesterday.setTime(today.getTime()-24*60*60*1000)
+                var timestamp = Date.parse(today); 
+                var yesterdaystamp = Date.parse(yesterday);
+				for(var i =0;i<events.length;i++){
+					var starttime = (events[i]['time'].split("-"))[0];
+					var endtime = (events[i]['time'].split("-"))[1];
+					var title = "预约人："+events[i]['mname']+"\n预约事由："+events[i]['goal']
+					if(starttime[1]==':'){
+						starttime = "0"+starttime
+					}
+					if(endtime[1]==':'){
+						endtime = "0"+endtime
+					}
+					fulldates.push(	{
+						id: i+100,
+						//title: events[i]['house_name'],
+						title:title,
+						start: events[i]['use_date']+'T'+starttime+"Z",
+						//end:events[i]['use_date']+'T'+add30minute(starttime),
+						end:events[i]['use_date']+'T'+endtime+"Z",
+						color: "#df584c"
+					});
+				}
+				var week = new Date().getDay();  
+
+				ds = mydate.getFullYear().toString()+"-";
+				if((mydate.getMonth()+1).toString().length == 1){
+					ds += "0";
+				}
+				ds += (mydate.getMonth()+1).toString()+"-"
+				if((mydate.getDate()+1).toString().length == 1){
+					ds += "0";
+				}
+				
+				ds += mydate.getDate().toString()+"T00:00:00Z";
+				console.log(ds);
+				$('#calendar').fullCalendar({
+					header: {
+						left: 'prev,next today',
+						//center: 'title',
+						right: 'agendaWeek'
+						//right: 'agendaWeek'
+					},
+					defaultView:'agendaWeek',
+					defaultDate:ds,
+					navLinks: true, // can click day/week names to navigate views
+					selectable: true,
+					selectHelper: true,
+					select: function(start, end) {
+					start_time=start['_i'][3]*60+start['_i'][4];
+					end_time=end['_i'][3]*60+end['_i'][4];
+					pick_date="";
+					if(start['_i'][0]){
+					pick_date+=start['_i'][0].toString()+'-';
+					if(start['_i'][1]+1<10)
+						pick_date+='0';
+					pick_date+=(start['_i'][1]+1).toString()+'-';
+					if(start['_i'][2]<10)
+						pick_date+='0';
+					pick_date+=start['_i'][2].toString();}
+					console.log(pick_date);
+					var ymd = formatDateTime(start['_i']);
+					min_sub = (end['_i'][3]*60 + end['_i'][4] )-(start['_i'][3]*60 + start['_i'][4]);
+					if(start['_i'][2] != end['_i'][2]){
+						alert('不能跨天选择哦！');
+						$("#hour_select").html("0");
+						return ;
+					}
+					console.log((min_sub));
+					$("#hour_select").html((min_sub+0.0)/60);
+					console.log(ymd);
+					if(ymd == "NaN-NaN-NaN"){
+						return ;
+					}
+					for(i=0;i<fulldates.length;i++){
+						if(formatDateTime(start['_i'])==data[i]){
+							bootbox.alert("这一天已经预约满了，换一天吧~");
+							return ;
+						}
+					}
+					if(start['_i']<yesterdaystamp){
+						alert("这一天已经过去了，换一天吧~");
+						return ;
+					}
+					str = start['_i'].toString();
+					tourl = "{:U('Index/Order/detail',array('date' => 'myurl'))}";
+					tourl=tourl.replace('myurl',formatDateTime(start['_i']));
+					console.log(start);
+					console.log(tourl);
+					location.href = tourl;
+					//console.log(tourl);
+					//location.href = "{:U('Index/Order/detail',array('date'=>"+str+"))}";
+						/*
+						var title = prompt('Event Title:');
+						var eventData;
+						if (title) {
+							eventData = {
+								title: title,
+								start: start,
+								end: end
+							};
+							$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+						}
+						$('#calendar').fullCalendar('unselect');*/
+
+				},
+				editable: true,
+				eventLimit: 8, // allow "more" link when too many events			
+				events: fulldates,
+				//slotDuration:'02:00:00',
+				contentHeight: 'auto',
+				minTime:'08:00:00',
+				maxTime:'22:00:00',
+				firstDay:(week-1)%7,
+				timeFormat: 'H:mm',
+				});
+			})
+	});
+        </script>
+        	
+	</body>
+	
+</html>
