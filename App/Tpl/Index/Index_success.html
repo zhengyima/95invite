@@ -17,15 +17,14 @@
         <div class="lang-wrap" data-lang="EN">
             <div class="container">
                 <div class="intro"> 
-                    <p>您的邀请码为 : {$code}</p>
+                    <p>您的邀请码为 : </p>
+                    <p id="p-code" style="font-size:35px; color:#417ded">{$code}</p>
                     <input type="hidden" value="{$code}" id="input-code" />
-                    <p>恭喜您参与空投成功，您将获得X个95C，请关注公众号"95年币圈哥"回复邀请码，以联系我们进行领取！</p>
+                   
                     <p>
-                        <button data-clipboard-target="#input-code">
-                            复制到剪切板
-                        </button>
                         <input type="button" value="复制到剪切板" class="ipt-btn" data-clipboard-target="#input-code" />
-                    </p>
+                    </p> 
+                    <p>恭喜您参与空投成功，您将获得X个95C，请关注公众号"95年币圈哥"回复邀请码，以联系我们进行领取！</p>
                     <p><img src="__PUBLIC__/img/code.png" /></p>
                 </div>
             </div>
@@ -43,6 +42,18 @@
     <script src="//cstaticdun.126.net/load.min.js"></script>
 
     <script src="__PUBLIC__/js/clipboard.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            var clipboard = new ClipboardJS('.ipt-btn', {
+                target: function() {
+                    return document.querySelector('#p-code');
+            }
+    });
+
+        })
+    </script>
 
     
 </body>
