@@ -1,4 +1,3 @@
-l
 <!doctype html>
 <html>
 
@@ -17,25 +16,14 @@ l
         </div>
         <div class="lang-wrap" data-lang="EN">
             <div class="container">
-                <h1 class="logo">
-                    <a href="https://t.me/nework_pro">
-                        <img src="https://img.vim-cn.com/07/74c6c22c59a3831d97be4d6c0f71a54e11db05.png" />
-                    </a>
-                </h1>
+                
                 <div class="intro">
-                    <div class="join">
-                        <a href="https://t.me/nework_pro" target="_blank">Join the Nework telegram group!</a>
-                    </div>
-                    <p>This event has ended, join Nework global official group, more exciting activities waiting for you!</p>
+                    
+                    <p>您的邀请码为 : {$code}</p>
+                    <p>恭喜您参与空投成功，您将获得X个95C，请关注公众号回复邀请码，以联系我们进行领取！</p>
+                    <p><img src="__PUBLIC__/img/code.bmp" /></p>
                 </div>
-                <form method="post">
-                    <fieldset>
-                        <div style="margin: 10px auto;"></div>
-                        <input type="text" class="ipt-txt ipt-address" placeholder="Enter your ETH wallet address" id="iptAddress" />
-                        <div style="margin: 10px auto;" class="captcha_div"></div>
-                        <input type="button" value="Submit" class="ipt-btn" />
-                    </fieldset>
-                </form>
+                
             </div>
             <div class="footer">
                 <a href="http://http://nework.pro/" target="_blank">http://nework.pro/</a>
@@ -58,11 +46,6 @@ l
                 if(address == ""){return ;}
                 $.post("{:U('Index/Index/address_submit')}",{address:address},function(data){
                     console.log(data)
-                    if(data.status == 1){
-                        tourl = "{:U('Index/Index/success',array('wno' => 'myurl1'))}"
-						tourl=tourl.replace('myurl1',data['wno']);
-                        location.href = tourl
-                    }
                 })
             })
 
