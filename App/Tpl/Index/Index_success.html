@@ -16,14 +16,18 @@
         </div>
         <div class="lang-wrap" data-lang="EN">
             <div class="container">
-                
-                <div class="intro">
-                    
+                <div class="intro"> 
                     <p>您的邀请码为 : {$code}</p>
-                    <p>恭喜您参与空投成功，您将获得X个95C，请关注公众号回复邀请码，以联系我们进行领取！</p>
-                    <p><img src="__PUBLIC__/img/code.bmp" /></p>
+                    <input type="hidden" value="{$code}" id="input-code" />
+                    <p>恭喜您参与空投成功，您将获得X个95C，请关注公众号"95年币圈哥"回复邀请码，以联系我们进行领取！</p>
+                    <p>
+                        <button data-clipboard-target="#input-code">
+                            复制到剪切板
+                        </button>
+                        <input type="button" value="复制到剪切板" class="ipt-btn" data-clipboard-target="#input-code" />
+                    </p>
+                    <p><img src="__PUBLIC__/img/code.png" /></p>
                 </div>
-                
             </div>
             <div class="footer">
                 <a href="http://http://nework.pro/" target="_blank">http://nework.pro/</a>
@@ -38,23 +42,8 @@
     </div>
     <script src="//cstaticdun.126.net/load.min.js"></script>
 
-    <script>
-    
-        $(document).ready(function(){
-            $(".ipt-btn").click(function(){
-                var address = $(".ipt-address").val()
-                if(address == ""){return ;}
-                $.post("{:U('Index/Index/address_submit')}",{address:address},function(data){
-                    console.log(data)
-                })
-            })
+    <script src="__PUBLIC__/js/clipboard.min.js"></script>
 
-
-
-        })
-    
-    
-    </script>
     
 </body>
 
